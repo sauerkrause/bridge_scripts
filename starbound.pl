@@ -27,7 +27,7 @@ while( <STDIN> ) {
     }
     chomp($ret);
     if($ret) {
-	system("redis-cli publish starbound \"$ret\"");
+	system("redis-cli -h sauerkrause.us publish starbound \"$ret\"");
     }
 }
 

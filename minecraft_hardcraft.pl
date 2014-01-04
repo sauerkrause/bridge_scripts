@@ -81,7 +81,7 @@ sub main {
 	chomp($ret);
 
 	if($ret) {
-	    system("redis-cli publish $PUBSUB \"$ret\"");
+	    system("redis-cli -h sauerkrause.us publish $PUBSUB \"$ret\"");
 	}
     }
 }
