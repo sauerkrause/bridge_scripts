@@ -21,18 +21,6 @@ sub main {
     $r->subscribe( ("irc"),
 		   \&redis_sub_cb);
     $r->wait_for_messages(5) while $keep_waiting;
-    # while( <STDIN> ) {
-    # 	my $line = $_;
-    # 	chomp($line);
-    # 	if ($line =~ /^3\) /) {
-    # 	    $line =~ s/^3\) "//;
-    # 	    $line =~ s/"$//;
-    # 	    $line =~ s/"/\"/g;
-    # 	    my $cmd = "mcrcon -c -H $host -P $port -p $passwd \"say $line\"";
-    # 	    print "$cmd\n";
-    # 	    system($cmd);
-    # 	}
-    # }
 }
 
 main @ARGV;
