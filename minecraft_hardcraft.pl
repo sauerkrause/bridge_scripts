@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 use v5.14;
+use Redis;
 
 # We should want them to put a pubsub name in $1
 my $PUBSUB = $ARGV[1];
@@ -82,7 +83,9 @@ sub main {
 	chomp($ret);
 
 	if($ret) {
-	    system("redis-cli -h $HOST publish $PUBSUB \"$ret\"");
+	    my $r = Redis->new( server => "$HOST:6379");
+	    $r->publish($PUBSUB, $ret);
+	    $r->quit;
 	}
     }
 }
