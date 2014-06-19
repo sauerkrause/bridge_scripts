@@ -2,7 +2,8 @@
 use v5.14;
 
 # We should want them to put a pubsub name in $1
-my $PUBSUB = $ARGV[0];
+my $PUBSUB = $ARGV[1];
+my $HOST = $ARGV[0];
 
 sub handle_join {
     my ($line) = @_;
@@ -81,7 +82,7 @@ sub main {
 	chomp($ret);
 
 	if($ret) {
-	    system("redis-cli -h sauerkrause.us publish $PUBSUB \"$ret\"");
+	    system("redis-cli -h $HOST publish $PUBSUB \"$ret\"");
 	}
     }
 }
