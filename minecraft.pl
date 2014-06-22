@@ -18,13 +18,15 @@ sub handle_quit {
 
 sub handle_speech {
     my ($line, $name) = @_;
-    return $line;
+    $line =~ /> (.*)/;
+    return "<$name> $1";
 }
 
 sub is_death_message {
     my ($line) = @_;
     my $ret = "";
     # Do some regex on the line to check if death message or not.
+    $line =~ s/.*INFO]: //;
     given ($line) {
 	$ret = $line when /^\w* was/;
 	$ret = $line when /^\w* got/;
@@ -65,7 +67,7 @@ sub main {
 		print "handling quit\n";
 		$ret = handle_quit($line);
 	    }
-	    when (/^<([a-zA-Z0-9>].*)>/) {
+	    when (/INFO]: <([a-zA-Z0-9>].*)> (.*)/) {
 		print "handling speech\n";
 		$ret = handle_speech($line, $1);
 	    }
@@ -81,7 +83,7 @@ sub main {
 	chomp($ret);
 
 	if($ret) {
-	    system("redis-cli publish $PUBSUB \"$ret\"");
+	    system("redis-cli -h vps.sauerkrause.us publish $PUBSUB \"$ret\"");
 	}
     }
 }
