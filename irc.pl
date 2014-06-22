@@ -10,7 +10,7 @@ sub main {
 	my $subscribed_topic = shift;
 	my $line = $message;
 	chomp($line);
-	if ($line =~ /^$ignore_channel:/) {
+	if ($line =~ /> $ignore_channel:/) {
 	    return;
 	} else  {
 	    $line =~ s/"$//;
